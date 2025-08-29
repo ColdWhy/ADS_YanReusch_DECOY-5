@@ -1,0 +1,3 @@
+alphabet = list('ABCDEFGHIJKLMNOPQRSTUVWXYZ,.? ')
+key_pool = list('1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%&*-=_+?,.;:<> ')
+# MAKE SURE THE KEY_POOL CONTAINS ALL ALPHABET CHARACTERS!!!
