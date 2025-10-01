@@ -74,10 +74,40 @@ def split_key(master_key):
     master_key = mangle_key(master_key)
     master_key = generate_stream(master_key)
 
+    table_key = ""
+    subtrans_key = ""
+    sub_key = ""
+    trans_key = ""
+
+    pendulum = True
+
+    for c in master_key:
+        if pendulum == True:
+            table_key += c
+        else:
+            subtrans_key += c
+
+        pendulum = not pendulum
+
+    pendulum = True
+
+    for c in subtrans_key:
+        if pendulum == True:
+            sub_key += c
+        else:
+            trans_key += c
+
+        pendulum = not pendulum
+
+
+    '''
+    old splitting logic
+    
     cutoff = (len(master_key) + 1) // 2  # ensures first half is bigger if odd
     table_key, subtrans_keys = master_key[:cutoff], master_key[cutoff:]
 
     cutoff = (len(subtrans_keys) + 1) // 2
     sub_key, trans_key = subtrans_keys[:cutoff], subtrans_keys[cutoff:]
+    '''
 
     return sub_key, table_key, trans_key
