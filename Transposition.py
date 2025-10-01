@@ -18,12 +18,21 @@ def transpose(plaintext, trans_key):
         i3 = (index // (len(key_num) ** 2)) % len(key_num)
 
         increase = 0
-        while True:
-            coord = (key_num[i1] * key_num[i2] * key_num[i3]) + increase
-            if coord in coordinates:
-                increase += 1 # all numbers must be different, so it keeps adding 1 until it lands on a unique one
-            else:
-                break
+
+        if (i1 + i2 + i3) % 2 == 0:
+            while True:
+                coord = (key_num[i1] * key_num[i2] * key_num[i3]) + increase
+                if coord in coordinates:
+                    increase += 1 # all numbers must be different, so it keeps adding 1 until it lands on a unique one
+                else:
+                    break
+        else:
+            while True:
+                coord = (-key_num[i1] * -key_num[i2] * -key_num[i3]) - increase
+                if coord in coordinates:
+                    increase -= 1 # all numbers must be different, so it keeps subtracting 1 until it lands on a unique one
+                else:
+                    break
 
         coordinates.append(coord)
         index += 1  # moves the index clock
@@ -59,12 +68,20 @@ def unscramble(ciphertext, trans_key):
         i3 = (index // (len(key_num) ** 2)) % len(key_num)
 
         increase = 0
-        while True:
-            coord = (key_num[i1] * key_num[i2] * key_num[i3]) + increase
-            if coord in coordinates:
-                increase += 1
-            else:
-                break
+        if (i1 + i2 + i3) % 2 == 0:
+            while True:
+                coord = (key_num[i1] * key_num[i2] * key_num[i3]) + increase
+                if coord in coordinates:
+                    increase += 1 # all numbers must be different, so it keeps adding 1 until it lands on a unique one
+                else:
+                    break
+        else:
+            while True:
+                coord = (-key_num[i1] * -key_num[i2] * -key_num[i3]) - increase
+                if coord in coordinates:
+                    increase -= 1 # all numbers must be different, so it keeps subtracting 1 until it lands on a unique one
+                else:
+                    break
 
         coordinates.append(coord)
         index += 1
