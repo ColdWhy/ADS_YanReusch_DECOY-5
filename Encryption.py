@@ -25,7 +25,16 @@ for char1 in tqdm(alphabet, desc="Progress", ncols=70):
 # ===================================================================================================
 
 def generate_key():
-    return ''.join(secrets.choice(key_pool) for _ in range(20))
+    while True:
+        try:
+            key_length = int(input("Key length (min 5): "))
+            if key_length >= 5:
+                break
+            else:
+                print("Key length must be at least 5.")
+        except ValueError:
+            print("Invalid input. Please enter an integer.")
+    return ''.join(secrets.choice(key_pool) for _ in range(key_length))
 
 def generate_key_r(length):
     return ''.join(secrets.choice(alphabet) for _ in range(length))
@@ -274,7 +283,7 @@ if flag_generate_table == True:
 if not cipher_table:
     raise ValueError("No cipher table available. Either load one from storage or generate a new one.")
 
-plaintext = "Beyond the northern mountains lies the timeless city"
+plaintext = input("Plaintext: ")
 arranged_plaintext = arrange_plaintext(plaintext)
 ciphertext_r = encrypt_r(master_key, cipher_table, arranged_plaintext)
 ciphertext = encrypt(sub_key, cipher_table, ciphertext_r)
