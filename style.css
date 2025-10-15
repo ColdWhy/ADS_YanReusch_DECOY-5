@@ -1,0 +1,10 @@
+body{
+    background-color: rgb(31, 33, 43);
+    font-family: monospace;
+    display: flex;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    color: white;
+}
