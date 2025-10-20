@@ -11,23 +11,39 @@
     <div class="content-container">
         <h1>DECOY-5</h1>
         <label>Key:</label>
-        <input>
+        <input type="text" id="key" style="width: 300px">
         <br><br>
 
         <label>Alphabet:</label>
-        <input value="ABCDEFGHIJKLMNOPQRSTUVWXYZ">
-        <h3>(Warning: Increasing the number of characters in the alphabet will increase )</h3>
+        <input type="text" id="alphabet" value="ABCDEFGHIJKLMNOPQRSTUVWXYZ,.? " style="width: 300px">
+        <h3>(Warning: Increasing the number of characters in the alphabet will increase encryption time.)</h3>
         <br><br>
+
+        <form>
+            <label>Use stored table?</label><br>
+            <label for="yes">Yes</label>
+            <input type="radio" id="yes" name="choice" value="yes">
+
+            <label for="no">No</label>
+            <input type="radio" id="no" name="choice" value="no">
+            <h3>(Warning: If choosing to use stored table, make sure to use the same password.)</h3>
+        </form>
+        <br><br><br><br>
 
         <label>PLAINTEXT:</label>
-        <textarea></textarea>
-        <br><br>
+        <input type="text" id="plaintext" style="width: 300px">
+        <button onclick="encrypt()">Encrypt</button>
+        <br>
+        <p id="encrypted_text"></p>
+        <br><br><br><br>
 
         <label>CIPHERTEXT:</label>
-        <textarea></textarea>
-        <br><br>
+        <input type="text" id="ciphertext" style="width: 300px">
+        <button onclick="decrypt()">Decrypt</button>
+        <br>
+        <p id="decrypted_text"></p>
 
-        <button>Go</button>
+
     </div>
     <script src="script.js"></script>
 </body>
