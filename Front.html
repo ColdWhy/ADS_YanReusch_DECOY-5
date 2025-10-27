@@ -26,20 +26,20 @@
 
             <label for="no">No</label>
             <input type="radio" id="no" name="choice" value="no">
-            <h3>(Warning: If choosing to use stored table, make sure to use the same password.)</h3>
+            <h3>(Warning: If choosing to use stored table, make sure to use the same password and alphabet.)</h3>
         </form>
         <br><br><br><br>
 
         <label>PLAINTEXT:</label>
         <input type="text" id="plaintext" style="width: 300px">
-        <button onclick="encrypt()">Encrypt</button>
+        <button onclick="server_encrypt()">Encrypt</button>
         <br>
         <p id="encrypted_text"></p>
         <br><br><br><br>
 
         <label>CIPHERTEXT:</label>
         <input type="text" id="ciphertext" style="width: 300px">
-        <button onclick="decrypt()">Decrypt</button>
+        <button onclick="server_decrypt()">Decrypt</button>
         <br>
         <p id="decrypted_text"></p>
 

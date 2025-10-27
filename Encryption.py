@@ -4,7 +4,7 @@ from tqdm import tqdm
 from Transposition import transpose
 from KeyHandling import split_key, generate_stream
 from Masking import mask
-from AlphabetPool import alphabet, key_pool
+from AlphabetPool import alphabet, key_pool, set_alphabet
 
 # ===================================================================================================
 #  LETTER BLOCKS
@@ -230,7 +230,7 @@ def encrypt(sub_key, cipher_table, arranged_plaintext):
 # ===================================================================================================
 #  RUNNING
 # ===================================================================================================
-
+'''
 # in case a random key is to be generated
 flag_generate_key = True
 # in case a cipher table is to be generated
@@ -293,4 +293,57 @@ ciphertext = mask(ciphertext)
 print(f"\nKeys:\nMaster key: ({master_key})\n\nSubstitution key: {sub_key}\n\nTable key: {table_key}\n\nTransposition key: {trans_key}")
 print(f"\nPlaintext: {plaintext}")
 print(f"\nCiphertext: ({ciphertext})")
+'''
+# ===================================================================================================
+#  SERVER
+# ===================================================================================================
 
+def request_encryption(key, alphabet, choice_stored_table, plaintext):
+    set_alphabet(alphabet)
+
+    # in case a cipher table is to be generated
+    flag_generate_table = True
+    cipher_table = None
+
+    if os.stat("storage.txt").st_size != 0:  # if storage is NOT empty
+        print("Would you like to use the last cipher table stored? (Y/N)")
+        ask = choice_stored_table
+        print(ask)
+
+        if ask == "yes":
+            flag_generate_table = False
+            with open("storage.txt", "r") as storage:
+                cipher_table = storage.read().splitlines()
+
+    while True:
+        master_key = key
+        print(f"Master key: {key}")
+        if any(c not in key_pool for c in master_key):
+            raise ValueError(f"Key has invalid characters. Characters allowed: [0–9], [A–Z], [a–z], [!@#$%&*-=_+?,.;:<>]")
+        else:
+            break
+
+    sub_key, table_key, trans_key = split_key(master_key)
+
+    if flag_generate_table == True:
+        cipher_table, cipher_dict = generate_cipher_table(table_key)  # cipher_dict currently unused
+        ask = input("Save new cipher table? Overwrites previous table. (Y/N): ").upper()
+        if ask == "Y":
+            with open("storage.txt", "w") as file:
+                file.writelines(item + "\n" for item in cipher_table)
+
+    if not cipher_table:
+        raise ValueError("No cipher table available. Either load one from storage or generate a new one.")
+
+    print(f"Plaintext: {plaintext}")
+    arranged_plaintext = arrange_plaintext(plaintext)
+    ciphertext_r = encrypt_r(master_key, cipher_table, arranged_plaintext)
+    ciphertext = encrypt(sub_key, cipher_table, ciphertext_r)
+    ciphertext = transpose(ciphertext, trans_key)
+    ciphertext = mask(ciphertext)
+
+    print(f"\nKeys:\nMaster key: ({master_key})\n\nSubstitution key: {sub_key}\n\nTable key: {table_key}\n\nTransposition key: {trans_key}")
+    print(f"\nPlaintext: {plaintext}")
+    print(f"\nCiphertext: ({ciphertext})")
+
+    return ciphertext

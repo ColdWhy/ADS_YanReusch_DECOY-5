@@ -1,7 +1,7 @@
-async function encrypt() {
+async function server_encrypt() {
     const key = document.getElementById('key').value;
     const alphabet = document.getElementById('alphabet').value;
-    const choice_stored_table = document.querySelector('input[name="choice"]:checked');
+    const choice_stored_table = document.querySelector('input[name="choice"]:checked')?.value;
     plaintext = document.getElementById('plaintext').value;
 
 
@@ -12,5 +12,5 @@ async function encrypt() {
     });
 
     const data = await response.json();
-    document.getElementById('encrypted_text').textContent = 'Encrypted text: (' + data.result + ')';
+    document.getElementById('encrypted_text').textContent = 'Encrypted text: (' + data.ciphertext + ')';
 }
