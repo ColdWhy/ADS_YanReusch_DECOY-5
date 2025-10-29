@@ -4,7 +4,7 @@ from tqdm import tqdm
 from Transposition import unscramble
 from KeyHandling import split_key, generate_stream
 from Masking import unmask
-from AlphabetPool import alphabet, key_pool
+from AlphabetPool import alphabet, key_pool, set_alphabet
 
 # ===================================================================================================
 #  LETTER BLOCKS
@@ -206,7 +206,7 @@ def decrypt(sub_key, cipher_table, arranged_text):
 # ===================================================================================================
 #  RUNNING
 # ===================================================================================================
-
+'''
 # in case a cipher table is to be generated
 flag_generate_table: bool = True
 cipher_table = None
@@ -250,3 +250,57 @@ plaintext = remove_decoys(plaintext)
 
 
 print(f"\nPlaintext: {plaintext}")
+'''
+# ===================================================================================================
+#  SERVER
+# ===================================================================================================
+
+def request_decryption(key, alphabet, choice_stored_table, ciphertext):
+    set_alphabet(alphabet)
+
+    # in case a cipher table is to be generated
+    flag_generate_table: bool = True
+    cipher_table = None
+
+    if os.stat("storage.txt").st_size != 0:  # if storage is NOT empty
+        print("Would you like to use the last cipher table stored? (Y/N)")
+        ask = choice_stored_table
+        print(ask)
+
+        if ask == "yes":
+            flag_generate_table = False
+            with open("storage.txt", "r") as storage:
+                cipher_table = storage.read().splitlines()
+
+
+    while True:
+        master_key = key
+        print(f"Master key: {key}")
+        if any(c not in key_pool for c in master_key):
+            print(f"Key has invalid characters. Characters allowed: [0–9], [A–Z], [a–z], [!@#$%&*-=_+?,.;:<>]")
+        else:
+            break
+
+    sub_key, table_key, trans_key = split_key(master_key)
+
+    if flag_generate_table == True:
+        cipher_table, cipher_dict = generate_cipher_table(table_key) # cipher_dict currently unused
+        ask = input("Save new cipher table? Overwrites previous table. (Y/N): ").upper()
+        if ask == "Y":
+            with open("storage.txt", "w") as file:
+                file.writelines(item + "\n" for item in cipher_table)
+
+    if not cipher_table:
+        raise ValueError("No cipher table available. Either load one from storage or generate a new one.")
+
+    ciphertext = input("Ciphertext: ")
+    plaintext = unmask(ciphertext)
+    plaintext = unscramble(plaintext, trans_key)
+    plaintext = separate_text(list(plaintext))
+    plaintext = decrypt(sub_key, cipher_table, plaintext)
+    plaintext = decrypt_r(master_key, cipher_table, plaintext)
+    plaintext = remove_decoys(plaintext)
+
+    print(f"\nPlaintext: {plaintext}")
+
+    return plaintext

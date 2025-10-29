@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import Encryption as en
+import Decryption as de
 
 app = Flask(__name__)
 CORS(app)
@@ -26,6 +27,17 @@ def server_encrypt():
 
     return jsonify({'ciphertext': ciphertext})
 
+def server_decrypt():
+    data = request.get_json()
+
+    key = data.get('key')
+    alphabet = data.get('alphabet')
+    choice_stored_table = data.get('choice_stored_table')
+    ciphertext = data.get('ciphertext')
+
+    plaintext = de.request_decryption(key, alphabet, choice_stored_table, ciphertext)
+
+    return jsonify({'plaintext': plaintext})
 
 if __name__ == '__main__':
     app.run(debug=True)
