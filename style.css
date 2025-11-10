@@ -1,10 +1,153 @@
-body{
-    background-color: rgb(31, 33, 43);
-    font-family: monospace;
-    display: flex;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    padding: 0;
-    color: white;
+/* Background and layout */
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: monospace;
+  color: #e5e5e5;
+  background: url('resources/background.png') no-repeat center center/cover;
+  position: relative;
+}
+
+/* Dark overlay for readability */
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  z-index: 0;
+}
+
+/* Main content box */
+.box-container {
+  position: relative;
+  z-index: 1;
+  background: rgba(25, 25, 25, 0.80);
+  padding: 30px 40px;
+  border-radius: 16px;
+  width: 600px;
+  max-width: 90%;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Header */
+h1 {
+  text-align: center;
+  margin-bottom: 25px;
+  letter-spacing: 2px;
+  color: #f0f0f0;
+}
+
+/* Inputs and labels */
+label {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+  color: #ccc;
+}
+
+input[type="text"],
+textarea {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  color: #eaeaea;
+  padding: 10px;
+  margin-top: 5px;
+  font-family: monospace;
+  resize: none;
+}
+
+input[type="text"]:focus,
+textarea:focus {
+  outline: none;
+  border-color: #777;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+textarea {
+  height: 120px;
+}
+
+/* Buttons */
+button {
+  margin-top: 10px;
+  background: #3a3a3a;
+  border: 1px solid #555;
+  color: #f0f0f0;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background: #555;
+  border-color: #777;
+}
+
+/* Radio groups */
+.radio-group {
+  margin-top: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.radio-group p {
+  margin: 0 0 5px 0;
+  font-weight: bold;
+  color: #bbb;
+}
+
+h5 {
+  color: #777;
+  font-weight: normal;
+  margin-top: 5px;
+}
+
+/* Tabs */
+.tab-container {
+  margin-top: 30px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 20px;
+}
+
+.tab-header {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.tab-button {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #aaa;
+  padding: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.tab-button.active {
+  color: #eaeaea;
+  border-bottom: 2px solid #888;
+}
+
+.tab-button:hover {
+  color: #ddd;
+}
+
+.tab {
+  display: none;
+}
+
+.tab.active {
+  display: block;
 }

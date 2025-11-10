@@ -1,58 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <title>DECOY</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DECOY-5</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <div class="content-container">
-        <h1>DECOY-5</h1>
-        <label>Key:</label>
-        <input type="text" id="key" style="width: 300px">
-        <br><br>
+  <div class="overlay"></div>
+  <div class="box-container">
+    <h1>DECOY-5</h1>
 
-        <label>Alphabet:</label>
-        <input type="text" id="alphabet" value="ABCDEFGHIJKLMNOPQRSTUVWXYZ,.? " style="width: 300px">
-        <h5>(Warning: Increasing the number of characters in the alphabet will increase encryption time.)</h5>
-        <br><br>
+    <div class="form-section">
+      <label for="key">Key:</label>
+      <input type="text" id="key" placeholder="Enter encryption key" />
 
-        <form>
-            <label>Use stored table?</label><br>
-            <label for="yes">Yes</label>
-            <input type="radio" id="yes" name="choice" value="yes">
+      <label for="alphabet">Alphabet:</label>
+      <input
+        type="text"
+        id="alphabet"
+        value="ABCDEFGHIJKLMNOPQRSTUVWXYZ,.? "
+      />
+      <h5>
+        (Warning: Increasing the number of characters in the alphabet will
+        increase encryption time.)
+      </h5>
 
-            <label for="no">No</label>
-            <input type="radio" id="no" name="choice" value="no">
-            <h5>(Warning: If choosing to use stored table, make sure to use the same password and alphabet.)</h5>
-        </form>
-        <br><br>
-        <form>
-            <label>Save created table?</label><br>
-            <label for="yes">Yes</label>
-            <input type="radio" id="save_yes" name="save_choice" value="yes">
+      <div class="radio-group">
+        <p>Use stored table?</p>
+        <label><input type="radio" id="yes" name="choice" value="yes" /> Yes</label>
+        <label><input type="radio" id="no" name="choice" value="no" /> No</label>
+        <h5>(Warning: Use same password and alphabet if reusing table.)</h5>
+      </div>
 
-            <label for="no">No</label>
-            <input type="radio" id="save_no" name="save_choice" value="no">
-            <h5>(Warning: Overrides previously stored table.)</h5>
-        </form>
-        <br><br><br><br>
-
-        <label>PLAINTEXT:</label>
-        <input type="text" id="plaintext" style="width: 300px">
-        <button onclick="server_encrypt()">Encrypt</button>
-        <br>
-        <p id="encrypted_text"></p>
-        <br><br><br><br>
-
-        <label>CIPHERTEXT:</label>
-        <input type="text" id="ciphertext" style="width: 300px">
-        <button onclick="server_decrypt()">Decrypt</button>
-        <br>
-        <p id="decrypted_text"></p>
+      <div class="radio-group">
+        <p>Save created table?</p>
+        <label><input type="radio" id="save_yes" name="save_choice" value="yes" /> Yes</label>
+        <label><input type="radio" id="save_no" name="save_choice" value="no" /> No</label>
+        <h5>(Warning: Overrides previously stored table.)</h5>
+      </div>
     </div>
-    <script src="script.js"></script>
+
+    <div class="tab-container">
+      <div class="tab-header">
+        <button class="tab-button active" data-tab="encrypt-tab">Encryption</button>
+        <button class="tab-button" data-tab="decrypt-tab">Decryption</button>
+      </div>
+
+      <div class="tab-content">
+        <div id="encrypt-tab" class="tab active">
+          <label for="plaintext">PLAINTEXT:</label>
+          <textarea id="plaintext"></textarea>
+          <button onclick="server_encrypt()">Encrypt</button>
+          <p id="encrypted_text"></p>
+        </div>
+
+        <div id="decrypt-tab" class="tab">
+          <label for="ciphertext">CIPHERTEXT:</label>
+          <textarea id="ciphertext"></textarea>
+          <button onclick="server_decrypt()">Decrypt</button>
+          <p id="decrypted_text"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Tab switching logic
+    const tabButtons = document.querySelectorAll(".tab-button");
+    const tabs = document.querySelectorAll(".tab");
+
+    tabButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        tabButtons.forEach((b) => b.classList.remove("active"));
+        tabs.forEach((t) => t.classList.remove("active"));
+        btn.classList.add("active");
+        document.getElementById(btn.dataset.tab).classList.add("active");
+      });
+    });
+  </script>
+
+  <script src="script.js"></script>
 </body>
 </html>
