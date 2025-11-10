@@ -298,7 +298,7 @@ print(f"\nCiphertext: ({ciphertext})")
 #  SERVER
 # ===================================================================================================
 
-def request_encryption(key, alphabet, choice_stored_table, plaintext):
+def request_encryption(key, alphabet, choice_stored_table, choice_save_table, plaintext):
     set_alphabet(alphabet)
 
     # in case a cipher table is to be generated
@@ -326,9 +326,11 @@ def request_encryption(key, alphabet, choice_stored_table, plaintext):
     sub_key, table_key, trans_key = split_key(master_key)
 
     if flag_generate_table == True:
-        cipher_table, cipher_dict = generate_cipher_table(table_key)  # cipher_dict currently unused
-        ask = input("Save new cipher table? Overwrites previous table. (Y/N): ").upper()
-        if ask == "Y":
+        cipher_table, cipher_dict = generate_cipher_table(table_key)
+        print("Save new cipher table? Overwrites previous table. (Y/N): ")# cipher_dict currently unused
+        ask = choice_save_table
+        print(ask)
+        if ask == "yes":
             with open("storage.txt", "w") as file:
                 file.writelines(item + "\n" for item in cipher_table)
 

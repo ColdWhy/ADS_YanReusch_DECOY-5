@@ -255,7 +255,7 @@ print(f"\nPlaintext: {plaintext}")
 #  SERVER
 # ===================================================================================================
 
-def request_decryption(key, alphabet, choice_stored_table, ciphertext):
+def request_decryption(key, alphabet, choice_stored_table, choice_save_table, ciphertext):
     set_alphabet(alphabet)
 
     # in case a cipher table is to be generated
@@ -272,7 +272,6 @@ def request_decryption(key, alphabet, choice_stored_table, ciphertext):
             with open("storage.txt", "r") as storage:
                 cipher_table = storage.read().splitlines()
 
-
     while True:
         master_key = key
         print(f"Master key: {key}")
@@ -285,15 +284,16 @@ def request_decryption(key, alphabet, choice_stored_table, ciphertext):
 
     if flag_generate_table == True:
         cipher_table, cipher_dict = generate_cipher_table(table_key) # cipher_dict currently unused
-        ask = input("Save new cipher table? Overwrites previous table. (Y/N): ").upper()
-        if ask == "Y":
+        print("Save new cipher table? Overwrites previous table. (Y/N): ")
+        ask = choice_save_table
+        print(ask)
+        if ask == "yes":
             with open("storage.txt", "w") as file:
                 file.writelines(item + "\n" for item in cipher_table)
 
     if not cipher_table:
         raise ValueError("No cipher table available. Either load one from storage or generate a new one.")
 
-    ciphertext = input("Ciphertext: ")
     plaintext = unmask(ciphertext)
     plaintext = unscramble(plaintext, trans_key)
     plaintext = separate_text(list(plaintext))

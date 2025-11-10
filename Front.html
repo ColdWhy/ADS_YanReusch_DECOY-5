@@ -16,7 +16,7 @@
 
         <label>Alphabet:</label>
         <input type="text" id="alphabet" value="ABCDEFGHIJKLMNOPQRSTUVWXYZ,.? " style="width: 300px">
-        <h3>(Warning: Increasing the number of characters in the alphabet will increase encryption time.)</h3>
+        <h5>(Warning: Increasing the number of characters in the alphabet will increase encryption time.)</h5>
         <br><br>
 
         <form>
@@ -26,7 +26,17 @@
 
             <label for="no">No</label>
             <input type="radio" id="no" name="choice" value="no">
-            <h3>(Warning: If choosing to use stored table, make sure to use the same password and alphabet.)</h3>
+            <h5>(Warning: If choosing to use stored table, make sure to use the same password and alphabet.)</h5>
+        </form>
+        <br><br>
+        <form>
+            <label>Save created table?</label><br>
+            <label for="yes">Yes</label>
+            <input type="radio" id="save_yes" name="save_choice" value="yes">
+
+            <label for="no">No</label>
+            <input type="radio" id="save_no" name="save_choice" value="no">
+            <h5>(Warning: Overrides previously stored table.)</h5>
         </form>
         <br><br><br><br>
 
@@ -42,8 +52,6 @@
         <button onclick="server_decrypt()">Decrypt</button>
         <br>
         <p id="decrypted_text"></p>
-
-
     </div>
     <script src="script.js"></script>
 </body>
