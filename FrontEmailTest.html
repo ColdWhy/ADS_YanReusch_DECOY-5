@@ -52,14 +52,14 @@
         <div id="encrypt-tab" class="tab active">
           <label for="plaintext">PLAINTEXT:</label>
           <textarea id="plaintext"></textarea>
-          <button onclick="server_encrypt()">Encrypt</button>
+          <button onclick="show_encrypting(); server_encrypt()">Encrypt</button>
           <p id="encrypted_text"></p>
         </div>
 
         <div id="decrypt-tab" class="tab">
           <label for="ciphertext">CIPHERTEXT:</label>
           <textarea id="ciphertext"></textarea>
-          <button onclick="server_decrypt()">Decrypt</button>
+          <button onclick="show_decrypting(); server_decrypt()">Decrypt</button>
           <p id="decrypted_text"></p>
         </div>
       </div>
@@ -79,6 +79,14 @@
         document.getElementById(btn.dataset.tab).classList.add("active");
       });
     });
+
+    function show_encrypting() {
+    document.getElementById("encrypted_text").textContent = "encrypting...";
+  }
+
+  function show_decrypting() {
+    document.getElementById("decrypted_text").textContent = "decrypting...";
+  }
   </script>
 
   <script src="script.js"></script>
