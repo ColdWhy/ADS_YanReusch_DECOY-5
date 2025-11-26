@@ -12,7 +12,7 @@ async function server_encrypt() {
     });
 
     const data = await response.json();
-    document.getElementById('encrypted_text').textContent = 'Encrypted text: (' + data.ciphertext + ')';
+    document.getElementById('encrypted_text').textContent =data.ciphertext;
 }
 
 async function server_decrypt() {
@@ -29,5 +29,5 @@ async function server_decrypt() {
     });
 
     const data = await response.json();
-    document.getElementById('decrypted_text').textContent = 'Decrypted text: (' + data.plaintext + ')';
+    document.getElementById('decrypted_text').textContent = data.plaintext;
 }

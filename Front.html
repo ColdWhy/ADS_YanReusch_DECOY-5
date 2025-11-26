@@ -5,6 +5,66 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DECOY-5</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    #gmail-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 10px 16px;
+      background: #d93025;
+      border: 1px solid #b1271f;
+      color: #f0f0f0;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      display: none;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.35);
+      transition: all 0.25s ease;
+      z-index: 999;
+    }
+
+    #gmail-btn:hover {
+      background: #b1271f;
+      border-color: #8f1f18;
+      transform: scale(1.05);
+    }
+
+    #gmail-popup {
+      position: fixed;
+      bottom: 70px;
+      right: 20px;
+      width: 320px;
+      padding: 15px;
+      background: rgba(25, 25, 25, 0.95);
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      display: none;
+      z-index: 999;
+    } {
+      position: fixed;
+      bottom: 70px;
+      right: 20px;
+      width: 300px;
+      padding: 15px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      display: none;
+    }
+    #gmail-popup textarea {
+      width: 100%;
+      height: 120px;
+      box-sizing: border-box;
+      display: block;
+    }
+    #gmail-popup input {
+      width: 100%;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+      display: block;
+    }
+  </style>
 </head>
 <body>
   <div class="overlay"></div>
@@ -16,15 +76,8 @@
       <input type="text" id="key" placeholder="Enter encryption key" />
 
       <label for="alphabet">Alphabet:</label>
-      <input
-        type="text"
-        id="alphabet"
-        value="ABCDEFGHIJKLMNOPQRSTUVWXYZ,.? "
-      />
-      <h5>
-        (Warning: Increasing the number of characters in the alphabet will
-        increase encryption time.)
-      </h5>
+      <input type="text" id="alphabet" value="ABCDEFGHIJKLMNOPQRSTUVWXYZ,.? " />
+      <h5>(Warning: Increasing the number of characters in the alphabet will increase encryption time.)</h5>
 
       <div class="radio-group">
         <p>Use stored table?</p>
@@ -65,10 +118,19 @@
     </div>
   </div>
 
+  <button id="gmail-btn">Gmail</button>
+
+  <div id="gmail-popup">
+    <input type="text" id="gmail-to" placeholder="Recipient Email" />
+    <textarea id="gmail-body"></textarea>
+    <button onclick="sendViaGmail()">Send</button>
+  </div>
+
   <script>
-    // Tab switching logic
     const tabButtons = document.querySelectorAll(".tab-button");
     const tabs = document.querySelectorAll(".tab");
+    const gmailBtn = document.getElementById("gmail-btn");
+    const gmailPopup = document.getElementById("gmail-popup");
 
     tabButtons.forEach((btn) => {
       btn.addEventListener("click", () => {
@@ -78,6 +140,33 @@
         document.getElementById(btn.dataset.tab).classList.add("active");
       });
     });
+
+    function checkForOutput() {
+      const enc = document.getElementById("encrypted_text").innerText.trim();
+      const dec = document.getElementById("decrypted_text").innerText.trim();
+      if (enc || dec) {
+        gmailBtn.style.display = "block";
+      }
+    }
+
+    const observer = new MutationObserver(checkForOutput);
+    observer.observe(document.getElementById("encrypted_text"), { childList: true, subtree: true, characterData: true });
+    observer.observe(document.getElementById("decrypted_text"), { childList: true, subtree: true, characterData: true });(document.getElementById("encrypted_text"), { childList: true });
+    observer.observe(document.getElementById("decrypted_text"), { childList: true });
+
+    gmailBtn.addEventListener("click", () => {
+      const enc = document.getElementById("encrypted_text").innerText.trim();
+      const dec = document.getElementById("decrypted_text").innerText.trim();
+      document.getElementById("gmail-body").value = enc || dec;
+      gmailPopup.style.display = gmailPopup.style.display === "block" ? "none" : "block";
+    });
+
+    function sendViaGmail() {
+      const to = document.getElementById("gmail-to").value;
+      const body = encodeURIComponent(document.getElementById("gmail-body").value);
+      const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${to}&su=Encrypted%20Message&body=${body}`;
+      window.open(gmailUrl, "_blank");
+    }
   </script>
 
   <script src="script.js"></script>
