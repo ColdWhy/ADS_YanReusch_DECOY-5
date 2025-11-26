@@ -7,7 +7,7 @@ body {
   justify-content: center;
   font-family: monospace;
   color: #e5e5e5;
-  background: url('resources/background.png') no-repeat center center/cover;
+  background: url('resources/background.png') repeat;
   position: relative;
 }
 
@@ -228,4 +228,12 @@ visibility: hidden;
 @keyframes glow {
 from { box-shadow: 0 0 5px #ffffff; }
 to { box-shadow: 0 0 20px #ffffff, 0 0 30px #ffffff; }
+}
+
+#encrypted_text,
+#decrypted_text {
+  word-break: break-all;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+  max-width: 100%;
 }
