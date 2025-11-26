@@ -1,4 +1,14 @@
+function showLoader() {
+    document.querySelectorAll(".glow").forEach(g => g.classList.add("visible"));
+}
+
+function hideLoader() {
+    document.querySelectorAll(".glow").forEach(g => g.classList.remove("visible"));
+}
+
 async function server_encrypt() {
+    showLoader();
+
     const key = document.getElementById('key').value;
     const alphabet = document.getElementById('alphabet').value;
     const choice_stored_table = document.querySelector('input[name="choice"]:checked')?.value;
@@ -12,10 +22,15 @@ async function server_encrypt() {
     });
 
     const data = await response.json();
-    document.getElementById('encrypted_text').textContent =data.ciphertext;
+    document.getElementById('output_en').textContent = "OUTPUT";
+    document.getElementById('encrypted_text').textContent = data.ciphertext;
+
+    hideLoader();
 }
 
 async function server_decrypt() {
+    showLoader();
+
     const key = document.getElementById('key').value;
     const alphabet = document.getElementById('alphabet').value;
     const choice_stored_table = document.querySelector('input[name="choice"]:checked')?.value;
@@ -29,5 +44,8 @@ async function server_decrypt() {
     });
 
     const data = await response.json();
+    document.getElementById('output_de').textContent = "OUTPUT";
     document.getElementById('decrypted_text').textContent = data.plaintext;
+
+    hideLoader();
 }

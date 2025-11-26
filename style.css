@@ -212,3 +212,20 @@ h5 {
       display: block;
     }
 
+.glow {
+width: 15px;
+height: 15px;
+background: #ffffff;
+border-radius: 50%;
+animation: glow 1.5s infinite alternate;
+visibility: hidden;
+}
+
+.glow.visible {
+  visibility: visible;
+}
+
+@keyframes glow {
+from { box-shadow: 0 0 5px #ffffff; }
+to { box-shadow: 0 0 20px #ffffff, 0 0 30px #ffffff; }
+}
