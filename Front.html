@@ -44,7 +44,7 @@
         <div id="encrypt-tab" class="tab active">
           <label for="plaintext">PLAINTEXT:</label>
           <textarea id="plaintext"></textarea>
-          <button onclick="server_encrypt()">Encrypt</button><br><br><div class="glow"></div>
+          <button onclick="server_encrypt()">Encrypt</button><br><br><div class="glow"></div><br>
           <b id="output_en"></b>
           <p id="encrypted_text"></p>
         </div>
@@ -52,7 +52,7 @@
         <div id="decrypt-tab" class="tab">
           <label for="ciphertext">CIPHERTEXT:</label>
           <textarea id="ciphertext"></textarea>
-          <button onclick="server_decrypt()">Decrypt</button><br><br><div class="glow"></div>
+          <button onclick="server_decrypt()">Decrypt</button><br><br><div class="glow"></div><br>
           <b id="output_de"></b>
           <p id="decrypted_text"></p>
         </div>
@@ -67,7 +67,6 @@
     <textarea id="gmail-body"></textarea>
     <button onclick="sendViaGmail()">Send</button>
   </div>
-
   <script>
     const tabButtons = document.querySelectorAll(".tab-button");
     const tabs = document.querySelectorAll(".tab");
